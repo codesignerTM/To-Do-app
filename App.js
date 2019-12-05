@@ -1,13 +1,8 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  TextInput,
-  ScrollView,
-  FlatList
-} from "react-native";
+import { StyleSheet, View, FlatList } from "react-native";
+
+import GoalInput from "./components/GoalInput";
+import GoalItem from "./components/GoalItem";
 
 export default function App() {
   const [enteredGoal, setEnteredGoal] = useState("");
@@ -27,23 +22,15 @@ export default function App() {
 
   return (
     <View style={styles.screen}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Goals"
-          style={styles.input}
-          onChangeText={goalInputHandler}
-          value={enteredGoal}
-        />
-        <Button title="Add" onPress={addGoalHandler} />
-      </View>
+      <GoalInput
+        goalInputHandler={goalInputHandler}
+        enteredGoal={enteredGoal}
+        addGoalHandler={addGoalHandler}
+      />
       <FlatList
         keyExtractor={(item, index) => item.id}
         data={courseGoals}
-        renderItem={itemData => (
-          <View style={styles.goal} key={goal}>
-            <Text>{itemData.item.value}</Text>
-          </View>
-        )}
+        renderItem={itemData => <GoalItem title={itemData.item.value} />}
       />
       {/* {courseGoals.map(goal => (
           <View style={styles.goal} key={goal}>
